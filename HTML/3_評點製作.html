@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+	<head>
+		<meta charset="utf-8" />
+		<title>評點製作</title>
+		<style>
+			div {
+				padding: 20px;
+			}
+
+			span {
+				font-size: 36px;
+				float: left;
+			}
+		</style>
+		<script>
+			window.onload = function() {
+				var arrayStar = document.getElementsByName("star[]");
+
+				for (var i = 0; i < arrayStar.length; i++) {
+					arrayStar[i].onmouseover = mouseover;
+				}
+			};
+
+			function mouseover() {
+				var arrayStar = document.getElementsByName("star[]");
+				var imgCount = document.getElementById("imgCount");
+				var count = this.id.substr("img".length);
+
+				for (var i = 0; i < arrayStar.length; i++) {
+					arrayStar[i].src = "imgs/starOff.gif";
+				}
+
+				for (var i = 0; i < count; i++) {
+					arrayStar[i].src = "imgs/starOn.gif";
+				}
+
+				imgCount.innerHTML = (count == 5) ? "你給" + count + "顆星，讚啦~~~" : "評分中：" + count;
+			}
+		</script>
+	</head>
+
+	<body>
+		<div>
+			<img id="img1" name="star[]" src="imgs/starOff.gif" />
+			<img id="img2" name="star[]" src="imgs/starOff.gif" />
+			<img id="img3" name="star[]" src="imgs/starOff.gif" />
+			<img id="img4" name="star[]" src="imgs/starOff.gif" />
+			<img id="img5" name="star[]" src="imgs/starOff.gif" />
+		</div>
+		<span id="imgCount">請評分…</span>
+	</body>
+
+</html>

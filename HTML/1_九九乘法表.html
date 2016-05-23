@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>九九乘法表</title>
+	<style>
+		table {
+			border: 2px green solid;
+			background-color: lightgreen;
+			margin: 0 auto;
+			border-collapse: collapse;
+		}
+
+		td {
+			width: 4em;
+			border-width: 0 0 0 2px;
+			border-style: solid;
+			border-color: green;
+			color: blue;
+		}
+	</style>
+	<script>
+		document.write("<table>");
+
+		for (var i = 1; i <= 9; i++) {
+			document.write("<tr>");
+			for (var j = 2; j <= 9; j++) {
+				document.write("<td>", j, "*", i, "=", i * j, "</td>");
+			}
+			document.write("</tr>");
+		}
+
+		document.write("</table>");
+	</script>
+</head>
+
+<body></body>
+
+</html>

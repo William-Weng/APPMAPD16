@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>月曆</title>
+	<script>
+		window.onload = function() {
+
+			var selectItem = document.getElementsByTagName("select");
+
+			for (var i = 0; i < selectItem.length; i++) {
+				selectItem[i].onchange = updateCalendar;
+			}
+
+			generateCalendar(2000, 2016, "idSelectYear");
+			generateCalendar(1, 12, "idSelectMonth");
+			generateCalendar(1, 31, "idSelectDay");
+
+			updateCalendar();
+		};
+
+		function generateCalendar(start, end, id) { // 產生日曆…
+			for (var i = start; i <= end; i++) {
+				var opt = window.document.createElement("option");
+				var optName = document.createTextNode(i);
+
+				opt.setAttribute("value", i);
+				opt.appendChild(optName);
+
+				document.getElementById(id).appendChild(opt);
+			}
+		}
+
+		function updateCalendar() { // 改變日曆…
+			var year = document.getElementById("idSelectYear").value;
+			var month = document.getElementById("idSelectMonth").value;
+			var day = document.getElementById("idSelectDay").value;
+			var lastDayOfMonth = new Date(year, month, 0).getDate(); // 取得當月的最後一天
+
+			if (this.id != "idSelectDay") { // 年月更動時，才要改變日期的範圍…
+				document.getElementById('idSelectDay').innerHTML = ""; //  清空日期(雖然不好)
+				generateCalendar(1, lastDayOfMonth, "idSelectDay");
+
+				if (day > lastDayOfMonth) { // 處理 ==> 1月31日 > 2月28日，以及選取日期歸零的問題…
+					document.getElementsByTagName('select')[2].getElementsByTagName('option')[lastDayOfMonth - 1].selected = "true";
+					day=lastDayOfMonth;
+				} else {
+					document.getElementsByTagName('select')[2].getElementsByTagName('option')[day - 1].selected = "true";
+				}
+			}
+			document.getElementById('answer').innerHTML = "您選的是" + year + "年 " + month + "月 " + day + "日";
+		}
+	</script>
+</head>
+
+<body>
+	<select id="idSelectYear"> </select><span>年</span>
+	<select id="idSelectMonth"> </select><span>月</span>
+	<select id="idSelectDay"> </select><span>日</span>
+	<div id="answer"></div>
+</body>
+
+</html>

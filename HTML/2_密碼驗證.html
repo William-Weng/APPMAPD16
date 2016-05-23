@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>密碼驗證</title>
+	<style>
+		fieldset {
+			width: 800px;
+			margin: 15px;
+			border: 3px solid #3ff;
+			border-radius: 10px;
+		}
+
+		select {
+			width: 10em;
+		}
+
+		.myLabel {
+			float: left;
+			width: 5em;
+			text-align: right;
+		}
+
+		.myLabelDiv {
+			border-bottom: 1px solid gray;
+			width: 90%;
+			margin: 20px;
+			padding-bottom: 10px;
+		}
+
+		.myButtonDiv {
+			text-align: center;
+		}
+
+		img {
+			width: 1em;
+		}
+	</style>
+	<script src="js/Calendar/Compact/CalendarPopup.js"></script>
+	<script>
+		var cal = new CalendarPopup(); // CalendarPopup.js ==> line.67 + 78
+	</script>
+	<script>
+		window.onload = function() {
+			document.getElementById("_name_").onblur = CheckName;
+			document.getElementById("_pwd_").onblur = CheckPWD;
+		};
+
+		function CheckName() {
+			var regxUTF8 = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+			var isUTF8 = false;
+			var str = this.value;
+
+			for (var i = 0; i < str.length; i++) {
+				if (regxUTF8.test(str.charAt(i))) {
+					isUTF8 = true;
+				} else {
+					isUTF8 = false;
+					break;
+				}
+			}
+
+			if (isUTF8) {
+				this.style.color = "green";
+				document.getElementById("spanName").innerHTML = '<img src="imgs/yes.png"/>姓名輸入正確的啦…';
+			} else {
+				this.style.color = "red";
+				document.getElementById("spanName").innerHTML = '<img src="imgs/no.png"/>請重新輸入中文字';
+			}
+		}
+
+		function CheckPWD() {
+			var regxEnglish = /[a-zA-Z]/;
+			var regxNumber = /[0-9]/;
+			var regxSpeical = /[!@#$%^&*]/;
+
+			var hasEnglish = false,	hasNumber = false, hasSpeical = false;
+			var isPWD = false;
+			var str = this.value;
+
+			if (str.length >= 6) {
+				for (var i = 0; i < str.length; i++) {
+					if (regxEnglish.test(str.charAt(i))) {
+						hasEnglish = true;
+						continue;
+					}
+
+					if (regxNumber.test(str.charAt(i))) {
+						hasNumber = true;
+						continue;
+					}
+
+					if (regxSpeical.test(str.charAt(i))) {
+						hasSpeical = true;
+						continue;
+					}
+				}
+			}
+
+			isPWD = hasNumber && hasEnglish && hasSpeical;
+
+			if (isPWD) {
+				this.style.color = "green";
+				document.getElementById("spanPwd").innerHTML = '<img src="imgs/yes.png"/>密碼輸入正確的啦…';
+			} else {
+				this.style.color = "red";
+				document.getElementById("spanPwd").innerHTML = '<img src="imgs/no.png"/>請重新輸入6個字以上，要包含：數字+英文字母+特殊符號';
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<form action="#" method="get" enctype="multipart/form-data">
+		<fieldset>
+			<legend>
+				必填資料
+			</legend>
+			<div class="myLabelDiv">
+				<label class="myLabel" for="a2ccount">姓名：</label>
+				<input id="_name_" type="text" name="account" maxlength="16" placeholder="請輸入帳號…" autofocus required autocomplete="off" />
+				<span id="spanName"> </span>
+			</div>
+			<div class="myLabelDiv">
+				<label class="myLabel" for="password">密碼：</label>
+				<input id="_pwd_" type="password" name="pwd" maxlength="32" placeholder="請輸入密碼…" required />
+				<span id="spanPwd"> </span>
+			</div>
+			<div class="myLabelDiv">
+				<label class="myLabel" for="date">日期：</label>
+				<a id="anchorname" href="#" onclick="cal.select(document.forms[0].date,'anchorname','MM/dd/yyyy'); return false;"><input id="date" type="text" readonly /></a>
+			</div>
+
+			<div class="myButtonDiv">
+				<input type="submit" />
+				<input type="reset" />
+			</div>
+		</fieldset>
+	</form>
+</body>
+
+</html>
