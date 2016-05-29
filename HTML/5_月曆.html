@@ -39,7 +39,7 @@
 			var lastDayOfMonth = new Date(year, month, 0).getDate(); // 取得當月的最後一天
 
 			if (this.id != "idSelectDay") { // 年月更動時，才要改變日期的範圍…
-				document.getElementById('idSelectDay').innerHTML = ""; //  清空日期(雖然不好)
+				document.getElementById('idSelectDay').innerHTML = ""; // 清空日期(雖然不好)
 				generateCalendar(1, lastDayOfMonth, "idSelectDay");
 
 				if (day > lastDayOfMonth) { // 處理 ==> 1月31日 > 2月28日，以及選取日期歸零的問題…
